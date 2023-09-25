@@ -7,38 +7,43 @@ import helmet from "helmet"
 import morgan from "morgan"
 import KpiRoutes from "./routes/kpi.js"
 import KPI from "./models/KPI.js"
-import { kpis } from "./data/data.js"
-
-
+import productRoutes from "./routes/product.js"
+import Product from "./models/Product.js"
+import transactionRoutes from "./routes/transaction.js"
+import Transaction from "./models/Transaction.js"
+import { kpis, products, transactions } from "./data/data.js"
 /* CONFIGURATIONS */
 dotenv.config()
-const app= express();
+const app = express();
 app.use(express.json())
 app.use(helmet())
-app.use(helmet.crossOriginResourcePolicy({policy: "cross-origin"}))
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }))
 app.use(morgan("common"))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors())
 
 /* ROUTES */
-app.use("/kpi" , KpiRoutes)
-
+app.use("/kpi", KpiRoutes)
+app.use("/product", productRoutes)
+app.use("/transaction", transactionRoutes)
 
 /* MONGOOSE SETUP */
 
 const PORT = process.env.PORT || 9000;
 
 mongoose
-.connect(process.env.MONGO_URL, {
-    //userNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(async () => {
-    app.listen(PORT,()=> console.log(`Server port: ${PORT}`))
-    /* ADD DATA ONCE OR AS NEEDED */
-    //await mongoose.connection.db.dropDatabase(); // evitar data duplicada
-    //KPI.insertMany(kpis)
+    .connect(process.env.MONGO_URL, {
+        //userNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(async () => {
+        app.listen(PORT, () => console.log(`Server port: ${PORT}`))
+        /* ADD DATA ONCE OR AS NEEDED */
+        //await mongoose.connection.db.dropDatabase(); // evitar data duplicada
+        //KPI.insertMany(kpis)
+        //Product.insertMany(products)
+        //Transaction.insertMany(transactions)
 
-})
-.catch((error) => console.log(`${error} did not connect`))
+    })
+    .catch((error) => console.log(`${error} did not connect`))

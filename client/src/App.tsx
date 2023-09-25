@@ -14,7 +14,7 @@ function App() {
         <ThemeProvider theme={theme}>
         <CssBaseline/> 
           
-          <Box sx={{with:"100%", height:"100%", padding: "1rem 2rem 4rem 2rem"}}></Box>
+          <Box sx={{width:"100%", height:"100%", padding: "1rem 2rem 4rem 2rem"}}></Box>
           <Navbar></Navbar>
           <Routes>
             <Route path="/" element={<Dashboard/>} />
